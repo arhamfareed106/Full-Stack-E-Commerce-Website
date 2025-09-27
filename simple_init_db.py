@@ -114,4 +114,4 @@ if __name__ == '__main__':
         if os.path.exists('shop.db'):
             print("✓ Database file confirmed to exist")
         else:
-            print("✗ Database file not 
+            print("✗ Database file not found after creation")
