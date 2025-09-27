@@ -1,0 +1,87 @@
+{% extends "base_simple.html" %} {% block title %}About Us - PatchCraft{%
+endblock %} {% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">About PatchCraft</h1>
+    <p class="text-xl text-gray-600">
+      Your trusted partner for custom patches and merchandise
+    </p>
+  </div>
+
+  <div class="prose prose-lg mx-auto">
+    <h2>Our Story</h2>
+    <p>
+      Founded in 2020, PatchCraft has been dedicated to providing high-quality
+      custom patches and merchandise to businesses, organizations, and
+      individuals. What started as a small operation has grown into a trusted
+      partner for thousands of customers worldwide.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      We believe that every design tells a story. Our mission is to help you
+      tell yours through premium custom patches, apparel, and accessories.
+      Whether you're looking to promote your brand, commemorate an event, or
+      create team unity, we're here to bring your vision to life.
+    </p>
+
+    <h2>Quality Commitment</h2>
+    <p>
+      At PatchCraft, quality is never compromised. We use only the finest
+      materials and state-of-the-art equipment to ensure every product meets our
+      rigorous standards. Our experienced team of designers and craftspeople
+      take pride in delivering exceptional results every time.
+    </p>
+
+    <h2>Why Choose PatchCraft?</h2>
+    <ul>
+      <li>
+        <strong>Expert Craftsmanship:</strong> Over 20 years of combined
+        experience in custom embroidery and design
+      </li>
+      <li>
+        <strong>Fast Turnaround:</strong> Most orders completed within 7-14
+        business days
+      </li>
+      <li>
+        <strong>Competitive Pricing:</strong> Fair prices without compromising
+        on quality
+      </li>
+      <li>
+        <strong>Customer Service:</strong> Dedicated support team to help you
+        every step of the way
+      </li>
+      <li>
+        <strong>No Minimum Orders:</strong> Whether you need 1 patch or 1,000,
+        we've got you covered
+      </li>
+    </ul>
+
+    <h2>Our Process</h2>
+    <p>Working with PatchCraft is simple and straightforward:</p>
+    <ol>
+      <li>Submit your design or work with our team to create one</li>
+      <li>Receive a detailed quote and timeline</li>
+      <li>Approve the design and place your order</li>
+      <li>We craft your patches with care and attention to detail</li>
+      <li>Your order is shipped directly to you</li>
+    </ol>
+
+    <h2>Get Started Today</h2>
+    <p>
+      Ready to create something amazing?
+      <a
+        href="{{ url_for('custom_order') }}"
+        class="text-primary-600 hover:text-primary-800"
+        >Start your custom order</a
+      >
+      today or browse our selection of
+      <a
+        href="{{ url_for('list_products') }}"
+        class="text-primary-600 hover:text-primary-800"
+        >ready-made products</a
+      >.
+    </p>
+  </div>
+</div>
+{% endblock %}

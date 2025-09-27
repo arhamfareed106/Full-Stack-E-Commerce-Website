@@ -1,0 +1,166 @@
+{% extends "base.html" %} {% block title %}Custom Order - PatchCraft{% endblock
+%} {% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow-lg rounded-lg">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h1 class="text-2xl font-bold text-gray-900">Custom Order Request</h1>
+      <p class="text-gray-600 mt-2">
+        Tell us about your custom patch project and we'll get back to you with a
+        quote.
+      </p>
+    </div>
+
+    <form
+      action="{{ url_for('custom.custom_order') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="p-6"
+    >
+      {{ form.hidden_tag() }}
+
+      <div class="space-y-6">
+        <!-- Project Title -->
+        <div>
+          {{ form.title.label(class="block text-sm font-medium text-gray-700")
+          }} {{ form.title(class="form-input mt-1", placeholder="e.g., Custom
+          Logo Patch for Team Uniforms") }} {% if form.title.errors %}
+          <div class="mt-1 text-sm text-red-600">
+            {% for error in form.title.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Project Description -->
+        <div>
+          {{ form.description.label(class="block text-sm font-medium
+          text-gray-700") }} {{ form.description(class="form-input mt-1",
+          rows="4", placeholder="Describe your project in detail: size, colors,
+          quantity, timeline, etc.") }} {% if form.description.errors %}
+          <div class="mt-1 text-sm text-red-600">
+            {% for error in form.description.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Design File Upload -->
+        <div>
+          {{ form.design_file.label(class="block text-sm font-medium
+          text-gray-700") }}
+          <div
+            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+          >
+            <div class="space-y-1 text-center">
+              <svg
+                class="mx-auto h-12 w-12 text-gray-400"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              <div class="flex text-sm text-gray-600">
+                <label
+                  for="{{ form.design_file.id }}"
+                  class="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+                >
+                  <span>Upload a file</span>
+                  {{ form.design_file(class="sr-only") }}
+                </label>
+                <p class="pl-1">or drag and drop</p>
+              </div>
+              <p class="text-xs text-gray-500">
+                PNG, JPG, PDF, AI, PSD up to 10MB
+              </p>
+            </div>
+          </div>
+          {% if form.design_file.errors %}
+          <div class="mt-1 text-sm text-red-600">
+            {% for error in form.design_file.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Additional Notes -->
+        <div>
+          {{ form.notes.label(class="block text-sm font-medium text-gray-700")
+          }} {{ form.notes(class="form-input mt-1", rows="3", placeholder="Any
+          additional information, special requirements, or questions?") }} {% if
+          form.notes.errors %}
+          <div class="mt-1 text-sm text-red-600">
+            {% for error in form.notes.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg
+                class="h-5 w-5 text-blue-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-blue-800">
+                What happens next?
+              </h3>
+              <div class="mt-2 text-sm text-blue-700">
+                <ul class="list-disc list-inside space-y-1">
+                  <li>We'll review your request within 24 hours</li>
+                  <li>Our team will contact you with a detailed quote</li>
+                  <li>Once approved, we'll start production</li>
+                  <li>Typical turnaround is 7-14 business days</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end space-x-3">
+          <a href="{{ url_for('index') }}" class="btn-secondary">Cancel</a>
+          <button type="submit" class="btn-primary">Submit Request</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // File upload preview
+  document
+    .getElementById("{{ form.design_file.id }}")
+    .addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const fileName = file.name;
+        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+        const label = document.querySelector(
+          'label[for="{{ form.design_file.id }}"]'
+        );
+        label.innerHTML = `<span>Selected: ${fileName} (${fileSize} MB)</span>`;
+      }
+    });
+</script>
+{% endblock %}

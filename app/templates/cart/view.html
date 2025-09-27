@@ -1,0 +1,188 @@
+{% extends "base.html" %} {% block title %}Shopping Cart - PatchCraft{% endblock
+%} {% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+
+  {% if cart_items %}
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Cart Items -->
+    <div class="lg:col-span-2">
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        {% for item in cart_items %}
+        <div
+          class="flex items-center p-6 {% if not loop.last %}border-b border-gray-200{% endif %}"
+        >
+          <!-- Product Image -->
+          <img
+            src="{{ item.product.image_url }}"
+            alt="{{ item.product.name }}"
+            class="w-20 h-20 object-cover rounded-lg"
+          />
+
+          <!-- Product Details -->
+          <div class="flex-1 ml-4">
+            <h3 class="text-lg font-semibold text-gray-900">
+              <a
+                href="{{ url_for('products.product_detail', slug=item.product.slug) }}"
+                class="hover:text-primary-600"
+                >{{ item.product.name }}</a
+              >
+            </h3>
+            <p class="text-gray-600">
+              ${{ "%.2f"|format(item.product.price) }} each
+            </p>
+
+            <!-- Quantity Controls -->
+            <div class="flex items-center mt-2">
+              <form
+                action="{{ url_for('cart.update_cart') }}"
+                method="POST"
+                class="flex items-center"
+              >
+                <input
+                  type="hidden"
+                  name="product_id"
+                  value="{{ item.product.id }}"
+                />
+                <label for="quantity-{{ item.product.id }}" class="sr-only"
+                  >Quantity</label
+                >
+                <input
+                  type="number"
+                  name="quantity"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  max="{{ item.product.stock }}"
+                  class="w-16 text-center border border-gray-300 rounded-md"
+                  id="quantity-{{ item.product.id }}"
+                  onchange="this.form.submit()"
+                />
+                <noscript>
+                  <button type="submit" class="ml-2 btn-secondary text-sm">
+                    Update
+                  </button>
+                </noscript>
+              </form>
+
+              <a
+                href="{{ url_for('cart.remove_from_cart', product_id=item.product.id) }}"
+                class="ml-4 text-red-600 hover:text-red-800 text-sm"
+                >Remove</a
+              >
+            </div>
+          </div>
+
+          <!-- Item Total -->
+          <div class="text-right">
+            <p class="text-lg font-semibold text-gray-900">
+              ${{ "%.2f"|format(item.total) }}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="lg:col-span-1">
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
+
+        <div class="space-y-2 mb-4">
+          <div class="flex justify-between">
+            <span class="text-gray-600">Subtotal</span>
+            <span class="text-gray-900">${{ "%.2f"|format(total) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Shipping</span>
+            <span class="text-gray-900">Free</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Tax</span>
+            <span class="text-gray-900">Calculated at checkout</span>
+          </div>
+          <div class="border-t border-gray-200 pt-2">
+            <div class="flex justify-between text-lg font-semibold">
+              <span>Total</span>
+              <span>${{ "%.2f"|format(total) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          {% if current_user.is_authenticated %}
+          <a
+            href="{{ url_for('checkout.checkout') }}"
+            class="w-full btn-primary text-center block"
+          >
+            Proceed to Checkout
+          </a>
+          {% else %}
+          <a
+            href="{{ url_for('auth.login', next=url_for('checkout.checkout')) }}"
+            class="w-full btn-primary text-center block"
+          >
+            Login to Checkout
+          </a>
+          {% endif %}
+
+          <a
+            href="{{ url_for('products.list_products') }}"
+            class="w-full btn-outline text-center block"
+          >
+            Continue Shopping
+          </a>
+
+          <a
+            href="{{ url_for('cart.clear_cart') }}"
+            class="w-full text-center text-red-600 hover:text-red-800 text-sm"
+          >
+            Clear Cart
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <!-- Empty Cart -->
+  <div class="text-center py-16">
+    <div class="max-w-md mx-auto">
+      <svg
+        class="mx-auto h-24 w-24 text-gray-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13h10m-4 8a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4z"
+        ></path>
+      </svg>
+      <h2 class="mt-4 text-xl font-semibold text-gray-900">
+        Your cart is empty
+      </h2>
+      <p class="mt-2 text-gray-600">
+        Start shopping to add items to your cart.
+      </p>
+      <a
+        href="{{ url_for('products.list_products') }}"
+        class="mt-6 btn-primary"
+      >
+        Start Shopping
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  // Auto-submit quantity changes
+  document.querySelectorAll('input[name="quantity"]').forEach((input) => {
+    input.addEventListener("change", function () {
+      this.form.submit();
+    });
+  });
+</script>
+{% endblock %}

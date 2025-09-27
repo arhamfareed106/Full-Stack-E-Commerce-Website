@@ -1,0 +1,129 @@
+{% extends "base_simple.html" %} {% block title %}FAQ - PatchCraft{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+      Frequently Asked Questions
+    </h1>
+    <p class="text-xl text-gray-600">
+      Find answers to common questions about our products and services
+    </p>
+  </div>
+
+  <div class="space-y-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        What file formats do you accept for custom designs?
+      </h3>
+      <p class="text-gray-700">
+        We accept various file formats including JPG, PNG, PDF, AI, and PSD. For
+        best results, vector files (AI, PDF) are preferred. If you don't have a
+        design file, our team can help create one for you.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        What's your minimum order quantity?
+      </h3>
+      <p class="text-gray-700">
+        We don't have a minimum order quantity! Whether you need just one patch
+        or thousands, we're happy to help. However, pricing may vary based on
+        quantity.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        How long does production take?
+      </h3>
+      <p class="text-gray-700">
+        Most orders are completed within 7-14 business days from design
+        approval. Rush orders may be available for an additional fee. We'll
+        provide you with an accurate timeline when you place your order.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        Do you ship internationally?
+      </h3>
+      <p class="text-gray-700">
+        Yes! We ship worldwide. Shipping costs and delivery times vary by
+        location. International customers are responsible for any customs duties
+        or taxes.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        Can I see a proof before production?
+      </h3>
+      <p class="text-gray-700">
+        Absolutely! We provide a digital proof for every custom order.
+        Production doesn't begin until you approve the design. Minor revisions
+        are included at no extra cost.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        What's your return policy?
+      </h3>
+      <p class="text-gray-700">
+        We stand behind our work! If you're not satisfied with your order due to
+        a production error, we'll remake it at no charge. Custom items cannot be
+        returned unless there's a defect or error on our part.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        How do I care for my patches?
+      </h3>
+      <p class="text-gray-700">
+        Our patches are designed to be durable and long-lasting. They can be
+        machine washed in cold water and air dried. Avoid bleach and high heat
+        to maintain the best appearance.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        Do you offer bulk discounts?
+      </h3>
+      <p class="text-gray-700">
+        Yes! We offer volume discounts for larger orders. Contact us with your
+        specific requirements and we'll provide you with a customized quote.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        Can you help with design services?
+      </h3>
+      <p class="text-gray-700">
+        Absolutely! Our experienced design team can help bring your ideas to
+        life. We offer design services for an additional fee, or we can work
+        with your existing artwork.
+      </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        How do I track my order?
+      </h3>
+      <p class="text-gray-700">
+        Once your order ships, you'll receive a tracking number via email. You
+        can also check your order status by logging into your account on our
+        website.
+      </p>
+    </div>
+  </div>
+
+  <div class="text-center mt-12">
+    <p class="text-gray-600 mb-4">Still have questions?</p>
+    <a href="{{ url_for('contact') }}" class="btn-primary">Contact Us</a>
+  </div>
+</div>
+{% endblock %}

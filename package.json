@@ -1,0 +1,14 @@
+{
+  "name": "ecommerce-flask",
+  "version": "1.0.0",
+  "description": "E-commerce Flask application with Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --minify",
+    "watch-css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0",
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.10"
+  }
+}

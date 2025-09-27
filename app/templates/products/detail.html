@@ -1,0 +1,272 @@
+{% extends "base.html" %} {% block title %}{{ product.name }} - PatchCraft{%
+endblock %} {% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Breadcrumb -->
+  <nav class="flex mb-8" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-4">
+      <li>
+        <a
+          href="{{ url_for('index') }}"
+          class="text-gray-500 hover:text-primary-600"
+          >Home</a
+        >
+      </li>
+      <li>
+        <svg
+          class="flex-shrink-0 h-5 w-5 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </li>
+      <li>
+        <a
+          href="{{ url_for('products.list_products') }}"
+          class="text-gray-500 hover:text-primary-600"
+          >Products</a
+        >
+      </li>
+      <li>
+        <svg
+          class="flex-shrink-0 h-5 w-5 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </li>
+      <li>
+        <a
+          href="{{ url_for('products.category_products', slug=product.category.slug) }}"
+          class="text-gray-500 hover:text-primary-600"
+          >{{ product.category.name }}</a
+        >
+      </li>
+      <li>
+        <svg
+          class="flex-shrink-0 h-5 w-5 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </li>
+      <li class="text-gray-900">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Product Image -->
+    <div class="aspect-w-1 aspect-h-1">
+      <img
+        src="{{ product.image_url }}"
+        alt="{{ product.name }}"
+        class="w-full h-96 object-cover rounded-lg shadow-lg"
+      />
+    </div>
+
+    <!-- Product Details -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+
+      <!-- Price -->
+      <div class="mb-6">
+        <span class="text-3xl font-bold text-primary-600"
+          >${{ "%.2f"|format(product.price) }}</span
+        >
+      </div>
+
+      <!-- Stock Status -->
+      <div class="mb-6">
+        {% if product.in_stock %}
+        <span
+          class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
+        >
+          <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          In Stock ({{ product.stock }} available)
+        </span>
+        {% else %}
+        <span
+          class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800"
+        >
+          Out of Stock
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Description -->
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold mb-2">Description</h3>
+        <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+      </div>
+
+      <!-- Add to Cart Form -->
+      {% if product.in_stock %}
+      <form
+        action="{{ url_for('cart.add_to_cart') }}"
+        method="POST"
+        class="mb-8"
+      >
+        <input type="hidden" name="product_id" value="{{ product.id }}" />
+
+        <div class="flex items-center space-x-4 mb-4">
+          <label for="quantity" class="text-sm font-medium text-gray-700"
+            >Quantity:</label
+          >
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            value="1"
+            min="1"
+            max="{{ product.stock }}"
+            class="w-20 text-center border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full sm:w-auto btn-primary text-lg px-8 py-3"
+        >
+          Add to Cart
+        </button>
+      </form>
+      {% endif %}
+
+      <!-- Product Features -->
+      <div class="border-t border-gray-200 pt-6">
+        <h3 class="text-lg font-semibold mb-4">Features</h3>
+        <ul class="space-y-2 text-gray-700">
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 text-green-500 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            High-quality materials
+          </li>
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 text-green-500 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Fast shipping
+          </li>
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 text-green-500 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Satisfaction guaranteed
+          </li>
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 text-green-500 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Custom design options available
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  {% if related_products %}
+  <div class="mt-16">
+    <h2 class="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for related_product in related_products %}
+      <div class="card hover:shadow-lg transition-shadow">
+        <a
+          href="{{ url_for('products.product_detail', slug=related_product.slug) }}"
+        >
+          <img
+            src="{{ related_product.image_url }}"
+            alt="{{ related_product.name }}"
+            class="w-full h-48 object-cover"
+          />
+        </a>
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-2">
+            <a
+              href="{{ url_for('products.product_detail', slug=related_product.slug) }}"
+              class="text-gray-900 hover:text-primary-600"
+              >{{ related_product.name }}</a
+            >
+          </h3>
+          <div class="flex justify-between items-center">
+            <span class="text-xl font-bold text-primary-600"
+              >${{ "%.2f"|format(related_product.price) }}</span
+            >
+            {% if related_product.in_stock %}
+            <form
+              action="{{ url_for('cart.add_to_cart') }}"
+              method="POST"
+              class="inline"
+            >
+              <input
+                type="hidden"
+                name="product_id"
+                value="{{ related_product.id }}"
+              />
+              <button type="submit" class="btn-primary text-sm">
+                Add to Cart
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

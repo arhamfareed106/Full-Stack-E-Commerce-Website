@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block title %}My Profile - PatchCraft{% endblock %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow-lg rounded-lg">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h1 class="text-2xl font-bold text-gray-900">My Profile</h1>
+    </div>
+
+    <div class="p-6">
+      <!-- User Information -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold mb-4">Account Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <p class="mt-1 text-sm text-gray-900">
+              {{ current_user.full_name }}
+            </p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <p class="mt-1 text-sm text-gray-900">{{ current_user.email }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700"
+              >Member Since</label
+            >
+            <p class="mt-1 text-sm text-gray-900">
+              {{ current_user.created_at.strftime('%B %d, %Y') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order History -->
+      <div>
+        <h2 class="text-lg font-semibold mb-4">Order History</h2>
+
+        {% if orders %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Order #
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Date
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Total
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Items
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {% for order in orders %}
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  #{{ order.id }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ order.created_at.strftime('%m/%d/%Y') }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                    class="inline-flex px-2 py-1 text-xs font-semibold rounded-full {% if order.status == 'paid' %}bg-green-100 text-green-800 {% elif order.status == 'shipped' %}bg-blue-100 text-blue-800 {% elif order.status == 'delivered' %}bg-purple-100 text-purple-800 {% elif order.status == 'cancelled' %}bg-red-100 text-red-800 {% else %}bg-yellow-100 text-yellow-800{% endif %}"
+                  >
+                    {{ order.status.title() }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  ${{ "%.2f"|format(order.total_price) }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ order.total_items }} item{{ 's' if order.total_items != 1
+                  else '' }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+          <p class="text-gray-500 mb-4">You haven't placed any orders yet.</p>
+          <a href="{{ url_for('products.list_products') }}" class="btn-primary"
+            >Start Shopping</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
